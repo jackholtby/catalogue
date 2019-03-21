@@ -23,4 +23,4 @@ class Item(Base):
 
 engine = create_engine('sqlite:///categories.db')
 
-Base.metadata_create_all(engine)
+Base.metadata.create_all(engine)
