@@ -16,8 +16,7 @@ session = DBSession()
 @app.route('/')
 @app.route('/catalogue/')
 def showCatalogue():
-    output = "<p>The Catalogue's main page</p>"
-    return output
+    return "The Catalogue's main page"
 
 # Show category and items contained within it
 @app.route('/catalogue/<int:category_id>/')
