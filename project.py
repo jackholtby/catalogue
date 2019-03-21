@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///categories.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -23,6 +23,7 @@ def showCatalogue():
 @app.route('/catalogue/<int:category_id>/')
 @app.route('/catalogue/<int:category_id>/items/')
 def showCategory(category_id):
+    category = session.query(Category).filter_by(id = category_id).one()
     return "The page for category with id: %s" % category
 
 # Edit a category
