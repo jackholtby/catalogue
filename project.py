@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -16,7 +16,8 @@ session = DBSession()
 @app.route('/')
 @app.route('/catalogue/')
 def showCatalogue():
-    return "The Catalogue's main page"
+    categories = session.query(Category).all()
+    return render_template('categories.html', categories = categories)
 
 # Show category and items contained within it
 @app.route('/catalogue/<int:category_id>/')
