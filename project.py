@@ -19,12 +19,17 @@ def showCatalogue():
     output = "<p>The Catalogue's main page</p>"
     return output
 
-# Show items inside specific category
+# Show category and items contained within it
 @app.route('/catalogue/<int:category_id>/')
 @app.route('/catalogue/<int:category_id>/items/')
 def showCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     return "The page for category with id: %s" % category.id
+
+# Create a category
+@app.route('/catalogue/new/')
+def newCategory():
+    return "The page for creating a new category"
 
 # Edit a category
 @app.route('/catalogue/<int:category_id>/edit/')
@@ -44,6 +49,11 @@ def showItem(item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(cat_id=category.id, id=item_id).one()
     return "The page for showing item with id: %s" % item.id
+
+# Create item
+@app.route('/catalogue/<int:category_id>/new/')
+def newItem(category_id):
+    return "The page for creating a new item"
 
 # Edit item
 @app.route('/catalogue/<int:category_id>/<int:item_id>/edit/')
