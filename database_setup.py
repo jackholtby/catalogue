@@ -13,7 +13,8 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
 
-class item(Base):
+class Item(Base):
+    __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     description = Column(String(400), nullable=False)
     title = Column(String(100), nullable=False)
