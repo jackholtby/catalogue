@@ -72,6 +72,11 @@ def deleteItem(category_id, item_id):
     item = session.query(Item).filter_by(cat_id=category_id, id=item_id).one()
     return render_template('deleteItem.html', category = category, item = item)
 
+# Login
+@app.route('/login/')
+def login():
+    return render_template('login.html')
+
 @app.route('/catalogue.json')
 def json():
     return "This is where you'd see the JSON endpoint data."
