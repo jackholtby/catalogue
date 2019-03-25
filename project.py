@@ -67,9 +67,10 @@ def editItem(item_id, category_id):
 
 # Delete item
 @app.route('/category/<int:category_id>/<int:item_id>/delete/')
-def deleteItem(item_id):
+def deleteItem(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return "The page for deleting item with id: %s" % item.id
+    item = session.query(Item).filter_by(cat_id=category_id, id=item_id).one()
+    return render_template('deleteItem.html', category = category, item = item)
 
 @app.route('/catalogue.json')
 def json():
