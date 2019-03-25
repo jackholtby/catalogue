@@ -47,7 +47,7 @@ def deleteCategory(category_id):
 
 # Show item
 @app.route('/category/<int:category_id>/<int:item_id>/')
-def showItem(item_id):
+def showItem(item_id, category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(cat_id=category.id, id=item_id).one()
     return "The page for showing item with id: %s" % item.id
