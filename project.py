@@ -21,49 +21,49 @@ def showCatalogue():
     return render_template('categories.html', categories = categories, items = items)
 
 # Show category and items contained within it
-@app.route('/catalogue/<int:category_id>/')
-@app.route('/catalogue/<int:category_id>/items/')
+@app.route('/category/<int:category_id>/')
+@app.route('/category/<int:category_id>/items/')
 def showCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return "The page for category with id: %s" % category.id
+    return "The page for category with id: %s" % category.name
 
 # Create a category
-@app.route('/catalogue/new/')
+@app.route('/category/new/')
 def newCategory():
-    return "The page for creating a new category"
+    return render_template('newCategory.html')
 
 # Edit a category
-@app.route('/catalogue/<int:category_id>/edit/')
+@app.route('/category/<int:category_id>/edit/')
 def editCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return "The page for editing category with id: %s" % category.id
+    return render_template('editCategory.html', category = category)
 
 # Delete a category
-@app.route('/catalogue/<int:category_id>/delete/')
+@app.route('/category/<int:category_id>/delete/')
 def deleteCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return "The page for deleting category with id: %s" % category.id
+    return render_template('deleteCategory.html', category = category)
 
 # Show item
-@app.route('/catalogue/<int:category_id>/<int:item_id>/')
+@app.route('/category/<int:category_id>/<int:item_id>/')
 def showItem(item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(cat_id=category.id, id=item_id).one()
     return "The page for showing item with id: %s" % item.id
 
 # Create item
-@app.route('/catalogue/<int:category_id>/new/')
+@app.route('/category/<int:category_id>/new/')
 def newItem(category_id):
     return "The page for creating a new item"
 
 # Edit item
-@app.route('/catalogue/<int:category_id>/<int:item_id>/edit/')
+@app.route('/category/<int:category_id>/<int:item_id>/edit/')
 def editItem(item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     return "The page for editing item with id: %s" % item.id
 
 # Delete item
-@app.route('/catalogue/<int:category_id>/<int:item_id>/delete/')
+@app.route('/category/<int:category_id>/<int:item_id>/delete/')
 def deleteItem(item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     return "The page for deleting item with id: %s" % item.id
@@ -74,4 +74,4 @@ def json():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host = '0.0.0.0', port = 8000)
+    app.run(host = '0.0.0.0', port = 8080)
