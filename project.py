@@ -50,7 +50,7 @@ def deleteCategory(category_id):
 def showItem(item_id, category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(cat_id=category.id, id=item_id).one()
-    return "The page for showing item with id: %s" % item.id
+    return render_template('item.html', category = category, item = item)
 
 # Create item
 @app.route('/category/<int:category_id>/new/')
