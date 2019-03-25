@@ -4,7 +4,7 @@
 {% include "menu.html" %}
 
   <div class="itemsMenu">
-    <h1>Category Items</h2>
+    <h1>Latest Items</h2>
     {% for item in items %}
       <a href = "/category/{{item.cat_id}}/{{item.id}}/"
         <h3>{{item.title}}</h3>
