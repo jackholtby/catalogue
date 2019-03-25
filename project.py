@@ -60,9 +60,10 @@ def newItem(category_id):
 
 # Edit item
 @app.route('/category/<int:category_id>/<int:item_id>/edit/')
-def editItem(item_id):
+def editItem(item_id, category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return "The page for editing item with id: %s" % item.id
+    item = session.query(Item).filter_by(cat_id=category_id, id=item_id).one()
+    return render_template('editItem.html', category = category, item = item)
 
 # Delete item
 @app.route('/category/<int:category_id>/<int:item_id>/delete/')
