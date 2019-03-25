@@ -24,9 +24,10 @@ def showCatalogue():
 @app.route('/category/<int:category_id>/')
 @app.route('/category/<int:category_id>/items/')
 def showCategory(category_id):
+    categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).all()
-    return render_template('category.html', category = category, items = items)
+    items = session.query(Item).filter_by(cat_id=category_id).all()
+    return render_template('category.html', categories = categories, category = category, items = items)
 
 # Create a category
 @app.route('/category/new/')

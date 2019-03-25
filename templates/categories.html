@@ -7,7 +7,7 @@
     <h1>Latest Items</h2>
     {% for item in items %}
       <a href = "/category/{{item.cat_id}}/{{item.id}}/"
-        <h3>{{item.title}}</h3>
+        <h3>{{item.cat_id}} spaces {{item.title}} spaces {{item.id}}</h3>
       </a>
     {% endfor %}
   </div>
