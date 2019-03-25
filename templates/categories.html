@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <div class="catsMenu">
+    <h1>Categories</h1>
+
+    {% for category in categories %}
+      <a href ="#">
+        <h3>{{category.name}}</h3>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="itemsMenu">
+    <h1>Category Items</h1>
+    {% for item in items %}
+      <a href = "#"
+        <h3>{{item.name}}</h3>
+      </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

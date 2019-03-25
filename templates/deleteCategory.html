@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<h2> Are you sure you want to delete {{category.name}}? </h2>
+
+<form action="#" method = "post">
+
+  <button type="submit" id="submit">Delete</button>
+  <a href="#">
+    <button>
+      Cancel
+    </button>
+  </a>
+</form>
+
+{% endblock %}
