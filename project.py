@@ -55,7 +55,8 @@ def showItem(item_id, category_id):
 # Create item
 @app.route('/category/<int:category_id>/new/')
 def newItem(category_id):
-    return "The page for creating a new item"
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('newItem.html', cat_id = category)
 
 # Edit item
 @app.route('/category/<int:category_id>/<int:item_id>/edit/')
