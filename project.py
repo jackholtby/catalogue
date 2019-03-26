@@ -63,7 +63,7 @@ def newItem(category_name):
 @app.route('/category/<string:category_name>/<string:item_name>/edit/')
 def editItem(item_name, category_name):
     category = session.query(Category).filter_by(name=category_name).one()
-    item = session.query(Item).filter_by(cat_id=category.id, name=item_name).one()
+    item = session.query(Item).filter_by(cat_id=category.id, title=item_name).one()
     return render_template('editItem.html', category = category, item = item)
 
 # Delete item
