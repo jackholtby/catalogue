@@ -5,11 +5,11 @@
 <div class = "main">
   <h1>Edit {{category.name}}</h1>
 
-  <form action="#" method = "post">
+  <form action="{{ url_for('editCategory', category_name = category.name)}}" method = "post">
     <div class="form">
-      <label for="title">Title:<label>
+      <label for="name">Title:<label>
         </br>
-        <input type="text" class="form-control" name="title" value="{{category.name}}">
+        <input type="text" name="name" value="{{category.name}}">
         <button type="submit" id="submit">
           Save
         </button>

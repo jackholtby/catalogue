@@ -3,11 +3,17 @@
 {% include "header.html" %}
 
   <h1>New Item</h1>
-  <h3>Category: {{cat_id.name}} </h3>
+  <h3>Category: </h3>
 
   <form action="#" method="post">
-    <label for="name">Name:</label>
-    <input type="text" maxlength="100" name="name">
+    <label for="name">Title</label>
+    <input type="text" maxlength="100" name="title">
+
+    <label for="name">Description</label>
+    <input type="text" maxlength="100" name="descrption">
+
+    <label for="name">Category</label>
+    <input type="text" maxlength="100" name="category">
     <button type="submit" id="submit">
       Create
     </button>
