@@ -32,6 +32,22 @@ newCategory = Category(name = "Ultimate Frisbee")
 session.add(newCategory)
 session.commit()
 
+newItem = Item(title = "", description = "", cat_id = "2")
+session.add(newItem)
+session.commit()
+
+newItem = Item(title = "", description = "", cat_id = "2")
+session.add(newItem)
+session.commit()
+
+newItem = Item(title = "", description = "", cat_id = "2")
+session.add(newItem)
+session.commit()
+
+newItem = Item(title = "", description = "", cat_id = "2")
+session.add(newItem)
+session.commit()
+
 newCategory = Category(name = "Rugby")
 session.add(newCategory)
 session.commit()

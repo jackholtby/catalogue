@@ -21,12 +21,12 @@ def showCatalogue():
     return render_template('categories.html', categories = categories, items = items)
 
 # Show category and items contained within it
-@app.route('/category/<int:category_id>/')
-@app.route('/category/<int:category_id>/items/')
-def showCategory(category_id):
+@app.route('/category/<string:category_name>/')
+@app.route('/category/<string:category_name>/items/')
+def showCategory(category_name):
     categories = session.query(Category).all()
-    category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(cat_id=category_id).all()
+    category = session.query(Category).filter_by(name=category_name).one()
+    items = session.query(Item).filter_by(cat_id=category.id).all()
     return render_template('category.html', categories = categories, category = category, items = items)
 
 # Create a category
@@ -35,42 +35,42 @@ def newCategory():
     return render_template('newCategory.html')
 
 # Edit a category
-@app.route('/category/<int:category_id>/edit/')
-def editCategory(category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
+@app.route('/category/<string:category_name>/edit/')
+def editCategory(category_name):
+    category = session.query(Category).filter_by(name=category_name).one()
     return render_template('editCategory.html', category = category)
 
 # Delete a category
-@app.route('/category/<int:category_id>/delete/')
-def deleteCategory(category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
+@app.route('/category/<string:category_name>/delete/')
+def deleteCategory(category_name):
+    category = session.query(Category).filter_by(name=category_name).one()
     return render_template('deleteCategory.html', category = category)
 
 # Show item
-@app.route('/category/<int:category_id>/<int:item_id>/')
-def showItem(item_id, category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
-    item = session.query(Item).filter_by(cat_id=category.id, id=item_id).one()
+@app.route('/category/<string:category_name>/<string:item_name>/')
+def showItem(item_name, category_name):
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(Item).filter_by(cat_id=category.id, title=item_name).one()
     return render_template('item.html', category = category, item = item)
 
 # Create item
-@app.route('/category/<int:category_id>/new/')
-def newItem(category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
+@app.route('/category/<string:category_name>/new/')
+def newItem(category_name):
+    category = session.query(Category).filter_by(name=category_name).one()
     return render_template('newItem.html', cat_id = category)
 
 # Edit item
-@app.route('/category/<int:category_id>/<int:item_id>/edit/')
-def editItem(item_id, category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
-    item = session.query(Item).filter_by(cat_id=category_id, id=item_id).one()
+@app.route('/category/<string:category_name>/<string:item_name>/edit/')
+def editItem(item_name, category_name):
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(Item).filter_by(cat_id=category.id, name=item_name).one()
     return render_template('editItem.html', category = category, item = item)
 
 # Delete item
-@app.route('/category/<int:category_id>/<int:item_id>/delete/')
-def deleteItem(category_id, item_id):
-    category = session.query(Category).filter_by(id=category_id).one()
-    item = session.query(Item).filter_by(cat_id=category_id, id=item_id).one()
+@app.route('/category/<string:category_name>/<string:item_name>/delete/')
+def deleteItem(category_name, item_name):
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(Item).filter_by(cat_id=category.id, name=item_name).one()
     return render_template('deleteItem.html', category = category, item = item)
 
 # Login

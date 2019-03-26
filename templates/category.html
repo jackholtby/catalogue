@@ -6,7 +6,7 @@
   <div class="itemsMenu">
     <h1>{{category.name}} Items</h1>
     {% for item in items %}
-      <a href = "/category/{{category.id}}/{{item.id}}/"
+      <a href = "/category/{{category.name}}/{{item.title}}/"
         <h3>{{item.title}}</h3>
       </a>
     {% endfor %}
