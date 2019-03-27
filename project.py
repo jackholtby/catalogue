@@ -53,12 +53,6 @@ def editCategory(category_name):
     else:
         return render_template('editCategory.html', category = editedCategory)
 
-# Delete a category
-@app.route('/category/<string:category_name>/delete/')
-def deleteCategory(category_name):
-    category = session.query(Category).filter_by(name=category_name).one()
-    return render_template('deleteCategory.html', category = category)
-
 # Show item
 @app.route('/category/<string:category_name>/<string:item_name>/')
 def showItem(item_name, category_name):
@@ -67,10 +61,18 @@ def showItem(item_name, category_name):
     return render_template('item.html', category = category, item = item)
 
 # Create item
-@app.route('/category/<string:category_name>/new/', methods=['GET', 'POST'])
-def newItem(category_name):
-    category = session.query(Category).filter_by(name = category_name).one()
-    return render_template('newItem.html')
+@app.route('/item/new/', methods=['GET', 'POST'])
+def newItem():
+    categories = session.query(Category).all()
+    if request.method == 'POST':
+        newItem = Item(title = request.form['title'],
+                       description = request.form['description'],
+                       cat_id = request.form['category'])
+        session.add(newItem)
+        session.commit()
+        return redirect(url_for('showCatalogue'))
+    else:
+        return render_template('newItem.html', categories = categories)
 
 # Edit item
 @app.route('/category/<string:category_name>/<string:item_name>/edit/')
@@ -80,11 +82,16 @@ def editItem(item_name, category_name):
     return render_template('editItem.html', category = category, item = item)
 
 # Delete item
-@app.route('/category/<string:category_name>/<string:item_name>/delete/')
+@app.route('/category/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
-    item = session.query(Item).filter_by(cat_id=category.id, name=item_name).one()
-    return render_template('deleteItem.html', category = category, item = item)
+    itemToDelete = session.query(Item).filter_by(cat_id=category.id, title=item_name).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        return redirect(url_for('showCatalogue'))
+    else:
+        return render_template('deleteItem.html', category = category, item = itemToDelete)
 
 # Login
 @app.route('/login/')
