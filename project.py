@@ -29,30 +29,6 @@ def showCategory(category_name):
     items = session.query(Item).filter_by(cat_id=category.id).all()
     return render_template('category.html', categories = categories, category = category, items = items)
 
-# Create a category
-@app.route('/category/new/', methods=['GET', 'POST'])
-def newCategory():
-    if request.method == 'POST':
-        newCategory = Category(name = request.form['name'])
-        session.add(newCategory)
-        session.commit()
-        return redirect(url_for('showCatalogue'))
-    else:
-        return render_template('newCategory.html')
-
-# Edit a category
-@app.route('/category/<string:category_name>/edit/', methods=['GET', 'POST'])
-def editCategory(category_name):
-    editedCategory = session.query(Category).filter_by(name=category_name).one()
-    if request.method == 'POST':
-        if request.form['name']:
-            editedCategory.name = request.form['name']
-        session.add(editedCategory)
-        session.commit()
-        return redirect(url_for('showCatalogue'))
-    else:
-        return render_template('editCategory.html', category = editedCategory)
-
 # Show item
 @app.route('/category/<string:category_name>/<string:item_name>/')
 def showItem(item_name, category_name):
