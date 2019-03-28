@@ -2,31 +2,26 @@
 {% block content %}
 {% include "header.html" %}
 
-<div class = "main">
-  <h1>Edit {{item.title}}</h1>
+  <h1>Edit Item: {{item.title}}</h1>
+  <h3>From category: {{item.category.name}}
+  </br></br>
+  <form action="#" method="post">
+    <label for="title">Title</label>
+    <input type="text" maxlength="100" name="title" value="{{item.title }}">
 
-  <form action="#" method = "post">
-    <div class="form">
-      <label for="title">Title<label>
-        </br>
-        <input type="text" class="form-control" name="title" value="{{item.name}}">
-        </br>
-        </br>
-        <label for="description">Description<label>
-        </br>
-        <input type="text" class="form-control" name="description" value="{{item.description}}">
-        </br>
-        </br>
-        <button type="submit" id="submit">
-          Save
-        </button>
-      <a href = "#")}}'>
-        <button>
-          Cancel
-        </button>
-      </a>
-    </div>
+    <label for="description">Description</label>
+    <input type="text" maxlength="400" name="description" value="{{item.description }}">
+
+    <label for="category">Category</label>
+    <select name="category" value="{{item.cat_id}}">
+      {% for cat in categories %}
+        <option value="{{cat.id}}">{{cat.name}}</option>
+      {% endfor %}
+    </select>
+    
+    <button type="submit">
+      Save
+    </button>
   </form>
-</div>
 
-{% endblock %}
+  {% endblock %}
