@@ -7,7 +7,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 import random, string
-import httplib2, requests
+import httplib2
+import requests
 import json
 
 # What's in a name!?
@@ -234,7 +235,9 @@ def showLogin():
 # Output the JSON endpoint data
 @app.route('/catalogue.json')
 def json():
-    return "This is where you'd see the JSON endpoint data."
+    categories = session.query(Category).all()
+    items = session.query(Item).all()
+    return jsonify(categories=[r.serialize for r in categories])
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
