@@ -141,6 +141,8 @@ def deleteItem(category_name, item_name):
 
 
 # Google Sign-in Server Side Function
+# This is the code that Udacity provided in their course. If you can tell
+# me how to get the thing working, please do.
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -309,7 +311,6 @@ def jsonItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(Item).filter_by(cat_id=category.id,
                                          title=item_name).one()
-
     return jsonify(item=item.serialize)
 
 if __name__ == '__main__':
