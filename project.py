@@ -62,7 +62,8 @@ def newItem():
     if request.method == 'POST':
         newItem = Item(title=request.form['title'],
                        description=request.form['description'],
-                       cat_id=request.form['category'])
+                       cat_id=request.form['category'],
+                       user_id=login_session['user_id'])
         session.add(newItem)
         session.commit()
         return redirect(url_for('showCatalogue'))
@@ -191,6 +192,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # Make a new user IF the user doesn't exist in the database yet.
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -243,6 +250,30 @@ def showLogin():
                     for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html')
+
+# User account helper functions
+
+# Create a new user
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email =
+        login_session['email'], picture = login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email = login_session['email']).one()
+    return user.id
+
+# Get some info about the user
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+# Get user ID
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 # Output the JSON endpoint data
 @app.route('/catalogue.json')
