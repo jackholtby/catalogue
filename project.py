@@ -5,7 +5,7 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 import random
 import string
 import httplib2
@@ -27,8 +27,14 @@ session = DBSession()
 def showCatalogue():
     categories = session.query(Category).all()
     items = session.query(Item).all()
-    return render_template('categories.html',
-                           categories=categories, items=items)
+
+    # Check if user is logged in, if not, show public main page.
+    if 'username' not in login_session:
+        return render_template('publicCategories.html',
+                               categories=categories, items=items)
+    else:
+        return render_template('categories.html',
+                               categories=categories, items=items)
 
 # Show category and items contained within it
 @app.route('/category/<string:category_name>/')
@@ -46,43 +52,57 @@ def showItem(item_name, category_name):
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(Item).filter_by(cat_id=category.id,
                                          title=item_name).one()
-    return render_template('item.html', category=category, item=item)
+    # Check if user is logged in, and if they created the current item.
+    creator = getUserInfo(item.user_id)
+
+    # Check if user is logged in or own the item. Redirect to login if not.
+    if 'username' not in login_session \
+    or creator.id != login_session['user_id']:
+        return render_template('publicItem.html', category=category, item=item)
+    else:
+        return render_template('item.html', category=category, item=item)
 
 # Create item
 @app.route('/item/new/', methods=['GET', 'POST'])
 def newItem():
     # Check if user is logged in. Redirect to login if not.
-    # if 'username' not in login_session:
-    # return redirect('/login/')
-
-    # Get list of categories
-    categories = session.query(Category).all()
-
-    # Create that item
-    if request.method == 'POST':
-        newItem = Item(title=request.form['title'],
-                       description=request.form['description'],
-                       cat_id=request.form['category'],
-                       user_id=login_session['user_id'])
-        session.add(newItem)
-        session.commit()
-        return redirect(url_for('showCatalogue'))
+    if 'username' not in login_session:
+        return redirect('/login/')
     else:
-        return render_template('newItem.html', categories=categories)
+        # Get list of categories
+        categories = session.query(Category).all()
+
+        # Create that item
+        if request.method == 'POST':
+            newItem = Item(title=request.form['title'],
+                           description=request.form['description'],
+                           cat_id=request.form['category'],
+                           user_id=login_session['user_id'])
+            session.add(newItem)
+            session.commit()
+            return redirect(url_for('showCatalogue'))
+        else:
+            return render_template('newItem.html', categories=categories)
 
 # Edit item
 @app.route('/category/<string:category_name>/<string:item_name>/edit/',
            methods=['POST', 'GET'])
 def editItem(item_name, category_name):
-    # Check if user is logged in. Redirect to login if not.
-    # if 'username' not in login_session:
-    #    return redirect('/login/')
-
     # Get list of categories, get current category and item.
     categories = session.query(Category).all()
     category = session.query(Category).filter_by(name=category_name).one()
     editedItem = session.query(Item).filter_by(cat_id=category.id,
                                                title=item_name).one()
+    creator = getUserInfo(editedItem.user_id)
+
+    # Check if user is logged in or own the item. Redirect to login if not.
+    if 'username' not in login_session \
+    or creator.id != login_session['user_id']:
+        return redirect('/login/')
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not \
+            authorized to edit this item. Make your own item to edit.')} \
+            </script><body onload='myFunction()'>"
 
     # Edit that item
     if request.method == 'POST':

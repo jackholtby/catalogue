@@ -4,7 +4,12 @@
 {% include "menu.html" %}
 
   <div class="itemsMenu">
-    <h1>Latest Items</h2>
+    <h1>Items</h2>
+
+    <div id="addItem">
+      <a href="{{url_for('newItem')}}">Add Item</a>
+    </div>
+
     {% for item in items %}
       <a href = "/category/{{item.category.name}}/{{item.title}}/"
         <h3>{{item.title}}</h3>
