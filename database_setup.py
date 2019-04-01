@@ -12,12 +12,14 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    items = relationship("Item")
 
     @property
     def serialize(self):
         return {
         'id': self.id,
-        'name': self.name
+        'name': self.name,
+        'items': [item.serialize for item in self.items]
         }
 
 class Item(Base):
