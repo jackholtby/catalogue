@@ -1,36 +1,100 @@
----main page route
-/catalogue (and '/')
+# Item Catalogue - Udacity Project
+### Author: Jack Holtby
 
-method: showCatalogue()
+## What is this?
+A web application that displays a catalogue of items in a few different
+predefined categories. Items can be created, deleted, and edited. These
+functions are protected by authorisation and authentication using google
+sign ins.
 
----show a category
-/catalogue/<int:category_id>
-/catalogue/<int:category_id>/items
+## Set up the environment
 
-method: showCategory()
+What to do in order to have an environment that will run the application.
+The $ symbol is used to show command prompts. It is not part of commands.
 
----edit a category
-/catalogue/<int:category_id>/edit
+* 1. Install Python (version 3).
+If you're running linux, run:
 
-method: editCategory()
+$ apt install python3 python3-pip
 
----delete a category (only if you own it)
-/catalogue/<int:category_id>/delete
+If you're using Ubuntu then append "sudo" to the front of that command.
+If you're using Windows or Mac you can find python through the following links:
+https://www.python.org/downloads/mac-osx/
+https://www.python.org/downloads/windows/
 
----show a specific item
-/catalogue/<int:category_id>/<int:item_id>
+Installation instructions can be found here: https://wiki.python.org/moin/BeginnersGuide/Download.
 
-method: showItem()
+* 2. Install VirtualBox
+You can install virtualbox on debian based linux distros with:
 
----edit a specific item (if you own it)
-/catalogue/<int:category_id>/<int:item_id>/edit
+$ apt install virtualbox
 
-method: editItem()
+If you're running Debian unstable then you'll be getting VirtualBox version 6.1
+or some such thing. This will not work with vagrant for some reason. You'll be
+able to boot (from virtualbox, don't even try booting using "vagrant up"),
+but the shared folders won't work. So I recommend installing on stable or
+equivalent.
 
----delete a specific item (if you own it)
-/catalogue/<int:category_id>/<int:item_id>/delete
+Get the old version that works from here: https://www.virtualbox.org/wiki/Download_Old_Builds_5_1
 
-deleteItem()
+* 3. Install vagrant
+You install vagrant to run the virtualbox system. You can find it here:
+https://www.vagrantup.com/downloads.html
 
----JSON endpoint
-catalogue.json
+Or you can install it using apt if you're using a real operating system.
+
+$ apt install vagrant
+
+Add "sudo" if you're using Ubuntu or other derivatives.
+
+You'll then need to download the configuration for the system that will run
+on virtualbox and vagrant. This can be downloaded here:
+https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
+
+Unzip this file into a directory of your choice. Enter the directory called
+'vagrant' inside the directory you just unzipped. While inside the vagrant
+directory, run the following command:
+
+$ vagrant up
+
+This will take quite some time to set up, depending on your internet connection.
+
+* 4. Log into the vagrant os
+
+You can log into the system with:
+
+$ vagrant ssh
+
+While logged in, you can find the data in the /vagrant folder.
+
+If it is not there, see the next step.
+
+## Set up the project files
+Now you have an environment working, let's get the application set up.
+
+* 1 Download the project
+Go to: https://github.com/jackholtby/catalogue and click "Clone or Download."
+Click on the "Download Zip" option that appears. Save it in the shared vagrant
+directory that was created when you installed the vagrant machine. Unzip it
+into that directory and you should have a directory called "Catalogue."
+
+* 2 Setup the database
+In a terminal, make sure you're inside the catalogue directory and you're
+accessing it via ssh so you're running the python version that is on the
+vagrant machine, not on your host machine. To create the database, run:
+
+$ python database_setup.py
+
+Then to populate the database, run:
+
+$ python populate_database.py
+
+And you're set.
+
+* 3 Run it
+Now you can run the application by running:
+
+$ python project.py
+
+And then access it via a browser on your host machine by entering
+http://localhost:5000 in the address bar.
