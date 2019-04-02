@@ -23,6 +23,7 @@ import json
 # What's in a name!?
 app = Flask(__name__)
 
+
 # Connect to the database
 engine = create_engine('sqlite:///categories.db')
 Base.metadata.bind = engine
@@ -297,7 +298,8 @@ def createUser(login_session):
                    picture=login_session['picture'])
     session.add(newUser)
     session.commit()
-    user = session.query(User).filter_by(email=login_session['email']).one()
+    user = session.query(User).filter_by(
+            email=login_session['email']).one_or_none()
     return user.id
 
 
