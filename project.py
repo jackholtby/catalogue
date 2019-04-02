@@ -1,11 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-from flask import make_response
+from flask import (Flask,
+                   render_template,
+                   request,
+                   redirect,
+                   url_for,
+                   jsonify,
+                   make_response)
 from flask import session as login_session
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
+from oauth2client.client import (flow_from_clientsecrets,
+                                 FlowExchangeError)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item, User
+from database_setup import (Base,
+                            Category,
+                            Item,
+                            User)
 import random
 import string
 import httplib2
