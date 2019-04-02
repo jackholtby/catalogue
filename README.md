@@ -129,3 +129,6 @@ button way down the right end. Save the file over the top of the client_secrets.
 which already exists in the catalogue folder. Then you should be set.
 
 Run the application!
+
+## DISCLAIMER:
+The Google sign-in coce is from the course. And the login html code I found on the forums since the code provided by Udacity does not work. :(
