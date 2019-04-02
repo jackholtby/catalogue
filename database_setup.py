@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 class User(Base):
     """
     Registered User information is stored in this table
@@ -21,12 +22,14 @@ class User(Base):
     # JSON format for the data.
     @property
     def serialize(self):
-        return {
-        'id': self.id,
-        'name': self.name,
-        'email': self.email,
-        'picture': self.picture
-    }
+        return
+        {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'picture': self.picture
+        }
+
 
 class Category(Base):
     """
@@ -39,16 +42,17 @@ class Category(Base):
     name = Column(String(250), nullable=False)
     items = relationship("Item", cascade="save-update, merge, delete")
 
-
     # JSON format for the data.
     @property
     def serialize(self):
-        return {
-        'id': self.id,
-        'name': self.name,
-        # Loop through all items found within category.
-        'items': [item.serialize for item in self.items]
+        return
+        {
+            'id': self.id,
+            'name': self.name,
+            # Loop through all items found within category.
+            'items': [item.serialize for item in self.items]
         }
+
 
 class Item(Base):
     """
@@ -67,13 +71,15 @@ class Item(Base):
     # JSON format for the data.
     @property
     def serialize(self):
-        return {
-        'id': self.id,
-        'description': self.description,
-        'title': self.title,
-        'cat_id': self.cat_id,
-        'user_id': self.user_id
+        return
+        {
+            'id': self.id,
+            'description': self.description,
+            'title': self.title,
+            'cat_id': self.cat_id,
+            'user_id': self.user_id
         }
+
 
 engine = create_engine('sqlite:///categories.db')
 
