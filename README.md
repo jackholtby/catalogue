@@ -98,3 +98,34 @@ $ python project.py
 
 And then access it via a browser on your host machine by entering
 http://localhost:5000 in the address bar.
+
+## Set it up with your own google web sign-in setup.
+
+If you want to have your own google sign-in set up and not use mine, do the following.
+
+1. Go to console.developers.google.com.
+
+2. At the top left to the right of the word google, you should see a drop down menu
+icon. Click on that and you should be able to create a project. Name it Catalogue.
+
+3. You should now Have a page titled "Credentials." Click on the "Create Credentials"
+dropdown menu, and click on "Oauth Client ID." Select Web App. It may first ask you to
+configure the consent screen.
+
+4. Configure the consent screen by putting in a name for the app (again, what?), and
+then your email. After that it'll take you back and you'll be able to choose web app
+for your application type.
+
+5. When you create the Web app, fill in the section with "Authorized Javascript Origins"
+with "http://localhost:5000". Under that in the "Authorized redirect URIs" put:
+http://localhost:5000/
+http://localhost:5000/login/
+http://localhost:5000/gconnect/
+
+Then click "Save"
+
+6. You should now see an entry in the Oauth 2.0 client IDs list. Click on the download
+button way down the right end. Save the file over the top of the client_secrets.json
+which already exists in the catalogue folder. Then you should be set.
+
+Run the application!
