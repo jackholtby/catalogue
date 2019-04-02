@@ -43,8 +43,12 @@ def showCategory(category_name):
     categories = session.query(Category).all()
     category = session.query(Category).filter_by(name=category_name).one()
     items = session.query(Item).filter_by(cat_id=category.id).all()
-    return render_template('category.html', categories=categories,
-                           category=category, items=items)
+    if 'username' not in login_session:
+        return render_template('publicCategory.html', categories=categories,
+                               category=category, items=items)
+    else:
+        return render_template('category.html', categories=categories,
+                               category=category, items=items)
 
 # Show item
 @app.route('/category/<string:category_name>/<string:item_name>/')
@@ -121,8 +125,12 @@ def editItem(item_name, category_name):
            methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     # Check if user is logged in. Redirect to login if not.
-    # if 'username' not in login_session:
-    #    return redirect('/login/')
+    if 'username' not in login_session:
+        return redirect('/login/')
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not \
+            authorized to edit this item. Make your own item to edit.')} \
+            </script><body onload='myFunction()'>"
 
     # Get current item and category
     category = session.query(Category).filter_by(name=category_name).one()
