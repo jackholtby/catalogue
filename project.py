@@ -23,6 +23,9 @@ import json
 # What's in a name!?
 app = Flask(__name__)
 
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "Catalogue"
 
 # Connect to the database
 engine = create_engine('sqlite:///categories.db')
@@ -286,7 +289,7 @@ def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
-    return render_template('login.html')
+    return render_template('login.html', CLIENT_ID=CLIENT_ID)
 
 # User account helper functions
 
