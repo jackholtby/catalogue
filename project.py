@@ -33,6 +33,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 # Show main Catalogue page
 @app.route('/')
 @app.route('/category/')
@@ -48,6 +49,7 @@ def showCatalogue():
         return render_template('categories.html',
                                categories=categories, items=items)
 
+
 # Show category and items contained within it
 @app.route('/category/<string:category_name>/')
 @app.route('/category/<string:category_name>/items/')
@@ -61,6 +63,7 @@ def showCategory(category_name):
     else:
         return render_template('category.html', categories=categories,
                                category=category, items=items)
+
 
 # Show item
 @app.route('/category/<string:category_name>/<string:item_name>/')
@@ -77,6 +80,7 @@ def showItem(item_name, category_name):
         return render_template('publicItem.html', category=category, item=item)
     else:
         return render_template('item.html', category=category, item=item)
+
 
 # Create item
 @app.route('/item/new/', methods=['GET', 'POST'])
@@ -99,6 +103,7 @@ def newItem():
             return redirect(url_for('showCatalogue'))
         else:
             return render_template('newItem.html', categories=categories)
+
 
 # Edit item
 @app.route('/category/<string:category_name>/<string:item_name>/edit/',
@@ -132,6 +137,7 @@ def editItem(item_name, category_name):
         return render_template('editItem.html', categories=categories,
                                category=category, item=editedItem)
 
+
 # Delete item
 @app.route('/category/<string:category_name>/<string:item_name>/delete/',
            methods=['GET', 'POST'])
@@ -157,6 +163,7 @@ def deleteItem(category_name, item_name):
     else:
         return render_template('deleteItem.html', category=category,
                                item=itemToDelete)
+
 
 # Google Sign-in Server Side Function
 # This is the code that Udacity provided in their course. If you can tell
@@ -250,6 +257,7 @@ def gconnect():
     print "done!"
     return output
 
+
 # Google Disconnect
 @app.route('/gdisconnect')
 def gdisconnect():
@@ -281,6 +289,7 @@ def gdisconnect():
         response = make_response(json.dumps("Couldn't revoke token for.", 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
 
 # Login
 @app.route('/login/')
@@ -320,12 +329,14 @@ def getUserID(email):
     except Exception:
         return None
 
+
 # Output the JSON endpoint data
 @app.route('/catalogue.json')
 def json():
     categories = session.query(Category).all()
     items = session.query(Item).all()
     return jsonify(categories=[r.serialize for r in categories])
+
 
 # Single Item json page
 @app.route('/category/<string:category_name>/<string:item_name>/json/')

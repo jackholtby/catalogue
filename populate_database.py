@@ -30,7 +30,8 @@ session.commit()
 
 newItem = Item(
                title="Wickets",
-               description="The latest and greatest wickets for your cricket set.",
+               description="The latest and greatest\
+               wickets for your cricket set.",
                cat_id="1", user_id="2")
 session.add(newItem)
 session.commit()
@@ -57,19 +58,26 @@ newCategory = Category(name="Ultimate")
 session.add(newCategory)
 session.commit()
 
-newItem = Item(title="Frisbee", description="Epic Cool frisbee", cat_id="2", user_id="1")
+newItem = Item(title="Frisbee", description="Epic Cool frisbee",
+               cat_id="2", user_id="1")
 session.add(newItem)
 session.commit()
 
-newItem = Item(title="Holder", description="Don't want to hold your frisbee? Don't!", cat_id="2", user_id="1")
+newItem = Item(title="Holder",
+               description="Don't want to hold your frisbee? Don't!",
+               cat_id="2", user_id="1")
 session.add(newItem)
 session.commit()
 
-newItem = Item(title="Gloves", description="Butter fingers? Catch that frisbee easily!", cat_id="2", user_id="3")
+newItem = Item(title="Gloves",
+               description="Butter fingers? Catch that frisbee easily!",
+               cat_id="2", user_id="3")
 session.add(newItem)
 session.commit()
 
-newItem = Item(title="ShinGuards", description="They'll stay here until you come back.", cat_id="2", user_id="2")
+newItem = Item(title="ShinGuards",
+               description="They'll stay here until you come back.",
+               cat_id="2", user_id="2")
 session.add(newItem)
 session.commit()
 
